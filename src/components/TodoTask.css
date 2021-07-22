@@ -1,0 +1,46 @@
+.todoList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 8px;
+}
+
+.task {
+  height: 35px;
+  min-width: 230px;
+  margin-top: 8px;
+  background-color: #dae8fc;
+  border: 1px solid #93aed5;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+}
+
+.task:hover {
+  opacity: 0.7;
+}
+
+.task span {
+  text-align: left;
+  padding: 1px 6px;
+  flex: 1 1 70%;
+  transition: all 0.3s ease-in;
+}
+
+.delete-btn {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.completed {
+  background-color: #d5e8d4;
+  border: 1px solid #9fc58d;
+}
