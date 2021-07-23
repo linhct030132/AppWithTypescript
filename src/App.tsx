@@ -6,11 +6,28 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './components/Header/Header'
 import { Form } from 'react-bootstrap';
 import { Navbar } from 'react-bootstrap';
+import Page from './components/Pagination/index';
+
 
 const App = () => {
 
-  const [users, setUsers] = useState(data)
+  const options = [
+    { key: 1, text: "Id", value: "id" },
+    { key: 2, text: "First Name", value: "firstName" },
+    { key: 3, text: "Email", value: "email" },
+  ];
+
+  const [users, setUsers] = useState(data);
   const [value, setValue] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPage, setUsersPage] = useState(10);
+
+  const indexOfLastUser = currentPage * usersPage;
+  const indexOfFirstUser = indexOfLastUser - usersPage;
+  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser)
+  console.log(currentPage);
+
+
 
   const formatDate = (date: any) => {
     return new Date(date)
@@ -23,8 +40,26 @@ const App = () => {
 
   const sortBy = (event: any) => {
     setValue(event.target.value)
-    
+    let a = event.target.value
+    console.log(a);
   }
+
+  const prevPage = () => {
+    if(currentPage>1){
+      setCurrentPage(currentPage-1)
+    }
+  }
+
+  const nextPage = () => {
+    if (currentPage < 10) {
+      setCurrentPage(currentPage+1)
+    }
+  }
+
+  const paginate = (number: number) => {
+    setCurrentPage(number)
+  }
+
 
   return (
     <div className="App">
@@ -32,13 +67,13 @@ const App = () => {
       <Navbar>
         <h1 className='me-4'>OrderBy: </h1>
         <Form.Control
-        as="select"
-        className='w-25'
-        onChange={sortBy}
-        value={value}
+          as="select"
+          className='w-25'
+          onChange={sortBy}
+          value={value}
         >
-          <option  value="Select field to sort">Select field to sort</option>
-          <option  value="id">Id</option>
+          <option>Select field to sort</option>
+          <option value="id">Id</option>
           <option value="firstName">First Name</option>
           <option value="lastName">Last Name</option>
           <option value="email">Email</option>
@@ -60,7 +95,7 @@ const App = () => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user, index) => {
+          {currentUsers.map((user, index) => {
             return <tr key={index}>
               <td>{user.id}</td>
               <td>{user.firstName}</td>
@@ -74,7 +109,7 @@ const App = () => {
           })}
         </tbody>
       </Table>
-
+      <Page usersPage={usersPage} total={users.length} paginate={paginate} prevPage={prevPage} nextPage={nextPage} />
     </div>
   );
 }
