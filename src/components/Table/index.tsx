@@ -2,7 +2,7 @@ import React from 'react'
 import Table from 'react-bootstrap/Table';
 
 
-const TableUsers = ({ currentUsers, formatDate, formatPhone }: any) => {
+const TableUsers = ({ usersData, formatDate, formatPhone }: any) => {
   return (
     <Table striped hover size="md">
       <thead>
@@ -18,14 +18,14 @@ const TableUsers = ({ currentUsers, formatDate, formatPhone }: any) => {
         </tr>
       </thead>
       <tbody>
-        {currentUsers.map((user: any, index: number) => {
+        {usersData.map((user: any, index: number) => {
           return <tr key={index}>
             <td>{user.id}</td>
             <td>{user.firstName}</td>
             <td>{user.lastName}</td>
             <td>{user.email}</td>
             <td>{user.gender}</td>
-            <td>{formatDate(user.birthday).toLocaleDateString('en-US')}</td>
+            <td>{formatDate(user.birthday).toLocaleDateString('vn-VN')}</td>
             <td>{user.salary}</td>
             <td>{formatPhone(user.phone)}</td>
           </tr>
