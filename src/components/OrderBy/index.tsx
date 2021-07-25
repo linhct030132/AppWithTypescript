@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Dropdown } from 'react-bootstrap';
 import { Navbar } from 'react-bootstrap';
 
@@ -9,13 +9,13 @@ const OderBy = ({ options, handleSort }: any) => {
       <h1 className='me-4'>OrderBy: </h1>
       <Dropdown>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
-          Dropdown Button
+          Select sort by: 
         </Dropdown.Toggle>
         <Dropdown.Menu>
           {options.map((item: any) => {
             return <Dropdown.Item
               key={item.key}
-              onClick={handleSort}
+              onClick={(e: any) => handleSort(item.value)}
             >{item.text}</Dropdown.Item>
           })}
         </Dropdown.Menu>

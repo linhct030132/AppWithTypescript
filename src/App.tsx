@@ -9,6 +9,7 @@ import TableUsers from "./components/Table/index";
 import Search from "./components/Search/index";
 
 const App = () => {
+  
   const options = [
     { key: 1, text: "Id", value: "id" },
     { key: 2, text: "First Name", value: "firstName" },
@@ -46,27 +47,42 @@ const App = () => {
     let searchInput = e.target.value;
     let filteredData = original.filter((value) => {
       return (
+        value.id.toString().includes(searchInput)||
         value.firstName.toLowerCase().includes(searchInput.toLowerCase()) ||
         value.lastName.toLowerCase().includes(searchInput.toLowerCase()) ||
+        value.email.toLocaleLowerCase().includes(searchInput.toLowerCase()) ||
+        value.gender.toLocaleLowerCase().includes(searchInput.toLowerCase()) ||
         formatDate(value.birthday).toLocaleDateString('vn-VN').includes(searchInput) ||
+        value.salary.toString().includes(searchInput) ||
         value.phone.includes(searchInput)
       );
     });
-    setUsers(filteredData);
+    setUsers([...filteredData]);
   };
 
-  const compare = (a: any, b: any) => {
-    return a.firstName > b.firstName ? 1 : b.firstName > a.firstName ? -1 : 0;
-  }
+  function fieldSorter(fields: any) {
+    return function (a: any, b: any) {
+        return fields
+            .map(function (o: any) {
+                var dir = 1;
+                if (o[0] === '-') {
+                   dir = -1;
+                   o=o.substring(1);
+                }
+                if (a[o] > b[o]) return dir;
+                if (a[o] < b[o]) return -(dir);
+                return 0;
+            })
+            .reduce(function firstNonZeroValue (p: any,n: any) {
+                return p ? p : n;
+            }, 0);
+    };
+}
 
-  const handleSort = () => {
-    const orderedNewOptions = users.sort(compare);
-    setUsers(orderedNewOptions)
+  const handleSort = (field: any) => {
+    const orderedNewOptions = users.sort(fieldSorter([field]));
+    setUsers([...orderedNewOptions])
   };
-
-  console.log(users);
-  
-
 
   const prevPage = () => {
     if (currentPage > 1) {

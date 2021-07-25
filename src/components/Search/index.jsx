@@ -6,7 +6,7 @@ const Search = ({ handleSearch }) => {
 
   return (
     <div className='d-flex'>
-      <h1 className='me-5'>Filter:</h1>
+      <h1 className='me-5'>Search Box:</h1>
       <InputGroup className='w-25'>
         <FormControl
           placeholder="Search"
